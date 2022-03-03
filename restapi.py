@@ -4,6 +4,8 @@ import numpy as np
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+import io
+import random
 from io import StringIO
 import base64
 from tensorflow import keras
@@ -26,10 +28,9 @@ def hargada():
         nama=request.form["subb"]
     return render_template('hello.html')
 
-plt.rcParams["figure.figsize"] = [7.50, 3.50]
-plt.rcParams["figure.autolayout"] = True
 
 @app.route("/result", methods=["POST"])
+
 def hasil():
     if request.method == 'POST':
         hello = request.form.getlist('data[]')
@@ -43,23 +44,30 @@ def hasil():
         hasilnya=scaler.inverse_transform(prediksi)
         subm = request.form['mit']
     return render_template('result.html', name=hasilnya)
+   
 
-# {"harga":[[0.41004184],[0.42259414],[0.41422594],[0.35146444],[0.33054393],[0.32635983],[0.34728033]]}
+# 34.800
+# 34.800
+# 34.800
+# 34.800
+# 34.800
+# 34.900
+plt.rcParams["figure.figsize"] = [7.50, 3.50]
+plt.rcParams["figure.autolayout"] = True
 
 
+@app.route("/plot", methods=['GET'])
 def grafik():
-    img = StringIO.StringIO()
-    y = [1,2,3,4,5]
-    x = [0,2,1,3,4]
-
-    plt.plot(x,y)
-    plt.savefig(img, format='png')
-    plt.close()
-    img.seek(0)
-
-    plot_url = img.getvalue()
-
-    return render_template('result.html', plot_url=plot_url)
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    sb_x = ['10/9/2021', '11/9/2021', '12/9/2021', '13/9/2021', '14/9/2021']
+    ypred = [32400, 32200, 32300, 32200, 32400]
+    yact = [34800, 34800, 34800, 34800, 34800]
+    axis.plot(sb_x, ypred)
+    axis.plot(sb_x, yact)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 
 
