@@ -4,17 +4,19 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 # import matplotlib.pyplot as plt
-# import statistics
-# import math
+import statistics
+import math
 from sklearn.preprocessing import MinMaxScaler
-# from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score
 # from sklearn.metrics import classification_report
 # from sklearn.metrics import accuracy_score
-# from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error
 
-df = pd.read_csv('data2020.csv', usecols=["Tanggal", "Daging Ayam"])
 
-df2=df[["Daging Ayam"]]
+
+df = pd.read_csv('datahargapangan nasional.csv', usecols=["Tanggal", "Daging Ayam Ras Segar"])
+
+df2=df[["Daging Ayam Ras Segar"]]
 scaler=MinMaxScaler()
 data_fit=scaler.fit(df2)
 data_scale=data_fit.transform(df2)
@@ -46,10 +48,10 @@ ydata=ydata.reshape(ydata.shape[0],ydata.shape[1])
 
 
 xdata_shape=xdata.shape[0]
-xdata_train=int(xdata_shape*0.80)
+xdata_train=int(xdata_shape*0.70)
 
 ydata_shape=ydata.shape[0]
-ydata_train=int(ydata_shape*0.80)
+ydata_train=int(ydata_shape*0.70)
 
 xtrain=xdata[:xdata_train]
 ytrain=ydata[:ydata_train]
@@ -68,25 +70,48 @@ ytest=ydata[ydata_train:]
 #     print('#'*20)
 
 
-optimizer = keras.optimizers.Adam(learning_rate=0.01)
+optimizer = keras.optimizers.Adam(learning_rate=0.001)
 # optimizer = keras.optimizers.RMSprop(learning_rate=0.0005, rho=0.9, momentum=0.0, epsilon=1e-07, centered=False,
 #     name='RMSprop')
 
 model = keras.Sequential()
-model.add(layers.LSTM(50, input_shape=(7,1), return_sequences=True))
-model.add(layers.LSTM(50, return_sequences=False))
-# model.add(layers.LSTM(50, return_sequences=False))
+model.add(layers.LSTM(10, input_shape=(7,1), return_sequences=True))
+model.add(layers.LSTM(5, return_sequences=True))
+model.add(layers.LSTM(5, return_sequences=False))
 model.add(layers.Dense(5))
 model.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['accuracy'])
 
-model.fit(xtrain, ytrain, batch_size=5, epochs=100)
+model.fit(xtrain, ytrain, batch_size=15, epochs=100)
 
+train_prediksi = model.predict(xtrain)
+test_prediksi = model.predict(xtest)
+
+
+r2score_training=r2_score(ytrain,train_prediksi, multioutput='variance_weighted')
+r2score_testing=r2_score(ytest,test_prediksi, multioutput='variance_weighted')
+rmse_training=math.sqrt(mean_squared_error(ytrain,train_prediksi))
+rmse_testing=math.sqrt(mean_squared_error(ytest,test_prediksi))
 
 
 import joblib
 
-joblib.dump(data_fit, "scale.joblib")
-model.save("model_pred.h5")
+joblib.dump(r2score_training, "r2score_training.joblib")
+joblib.dump(r2score_testing, "r2score_testing.joblib")
+joblib.dump(rmse_training, "rmse_training.joblib")
+joblib.dump(rmse_testing, "rmse_testing.joblib")
+# joblib.dump(data_fit, "scale.joblib")
+model.save("model_dgAyam.h5")
+
+
+# parameter yg dipake
+# adam(70%:30%)
+# lr=0.001
+# otput=5
+# epoch=100
+# lstm_layer=3
+# batchsize=15
+# timestep=7	
+
 
 #  model.data_fit.inverse_transform(prediksi)
 
