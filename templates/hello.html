@@ -31,33 +31,49 @@
             <div class="panel-body">
               <form action="/get_data", method="POST">
                 <div class="form-group">
-                  <label for="d-7">3/9/202</label>
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep1" name="trip-start" value="2021-09-01" min="2021-08-01">
+                  <!-- <label for="d-7">3/9/202</label> -->
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-6">4/9/202</label>
+                  <!-- <label for="d-6">4/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep2" name="trip-start" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-5">5/9/202</label>
+                  <!-- <label for="d-5">5/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep3" name="trip-start" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-4">6/9/202</label>
+                  <!-- <label for="d-4">6/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep4" name="trip-start" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-3">7/9/202</label>
+                  <!-- <label for="d-3">7/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep5" name="trip-start" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-2">8/9/202</label>
+                  <!-- <label for="d-2">8/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <input type="date" id="timestep6" name="trip-start" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="d-1">9/9/202</label>
+                  <!-- <label for="d-1">9/9/202</label> -->
+                  <label for="start">Tanggal:</label>
+                  <!-- <input type="date" id="myDate" value="2000-05-05"  onblur="myDate(this.value)"> -->
+                  <input type="date" name="timestep7" id="timestep7" value="2021-09-01" min="2021-08-01">
                   <input type="text" name="data[]" class="form-control">
                 </div>
+                <!-- <input type="submit" onclick="myFunction()" name = "mit" class="btn btn-primary" value="Lihat Prediksi"> -->
                 <input type="submit" name = "mit" class="btn btn-primary" value="Lihat Prediksi">
               </form>
             </div>
@@ -78,24 +94,29 @@
     </div>
   </div>
 </div>
-
-      <!-- <div class="container">
+<div style="position:absolute; top: 70%; left: 50%;">
+      <div class="container">
         <div class="row col-md-8">
           <table class= "table table-striped" cellspacing="5" width="100%">
               <tr>
                 {% for data in dataset %}
               <thead>{{ titles[loop.index] }}</thead>
               <tbody>
-                
                 <td>{{ data | safe }}</td>
                   {% endfor %}
+
               </tbody>
               
               </tr>
             
       </div>
+      <!-- {% for row in x %}
+      {{ row }}
+      {% endfor %}
+    </div> -->
         </div>
-          </table> -->
+          </table>
+      
                 
 
      

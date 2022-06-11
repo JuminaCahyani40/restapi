@@ -62,11 +62,18 @@
 </div>
 </div>
 </div>
+<div class="container" style="left: 20%;">
+<div class="col-sm-3">
+  <div class="card text-white bg-info mb-3">
+    <h4 class="card-header">RMSE Data Hasil Prediksi dan Data Aktual</h4>
+    <div class="card-body">
+      <h6 class="card-title">{{ rmse }}</h6>
+    </div>
+    </div>
+  </div>
 <p></p>
 <p></p>
-<p></p>
-<p></p>
-<p></p>
+
     
     
     <!-- ini tabel -->
@@ -79,15 +86,16 @@
                         <th scope="col">Hasil Prediksi</th>
                     </tr>
                 </thead>
+ 
                 <tr>
-                    <th>10/9/2021</th>
+                    <th>{{ newdate1 }}</th>
                     {% for i in hsl[0:1] %}
                     <td>{{ i }}</td>
                     {% endfor %}
                     
                 </tr>
                 <tr>
-                    <th>11/9/2021</th>
+                    <th>{{ newdate2 }}</th>
                     
                     {% for i in hsl[1:2] %}
                     <td>{{ i }}</td>
@@ -95,7 +103,7 @@
                     
                 </tr>
                 <tr>
-                    <th>12/9/2021</th>
+                    <th>{{ newdate3 }}</th>
                     
                     {% for i in hsl[2:3] %}
                     <td>{{ i }}</td>
@@ -103,15 +111,15 @@
                     
                 </tr>
                 <tr>
-                    <th>13/9/2021</th>
+                    <th>{{ newdate4 }}</th>
                     
                     {% for i in hsl[3:4] %}
                     <td>{{ i }}</td>
                     {% endfor %}
-                    
+                  
                 </tr>
                 <tr>
-                    <th>14/9/2021</th>
+                    <th>{{ newdate5 }}</th>
                     
                     {% for i in hsl[4:5] %}
                     <td>{{ i }}</td>
@@ -121,21 +129,36 @@
             </table>
         </div>
     </div>
+    <!-- <input type="date" id="myDate" value="2000-05-05">
+
+    <button type="button" onclick="myFunction()">Try it</button>
+
+    <p id="demo"></p>
+    <script>
+        function  xyFunction() {
+          var x = document.getElementById("myDate");
+          var defaultVal = x.defaultValue;
+          var currentVal = x.value;
+          
+          document.getElementById("demo").innerHTML = "<br>The new, current value is: " + currentVal;
+          }
+        </script> -->
+
     
-    <div style="position:absolute; top: 30%; left: 30%; width: 48%; height: 48%;">
+    <div style="position:absolute; top: 40%; left: 30%; width: 48%; height: 48%;">
     <canvas id="lineChart" width="900" height="400"></canvas>
     <script>
         var ctx = document.getElementById("lineChart").getContext("2d");
         var lineChart = new Chart(ctx, {
             type: "line",
             data: {
-                labels: {{ labels | safe}},
+                labels: {{ labels | safe }},
                 datasets: [
                     {
                         label: "Data Aktual",
                         data: {{ values | safe }},
                         fill: false,
-                        borderColor: "rgb(75, 192, 192)",
+                        borderColor: "rgb(30, 50, 50)",
                         lineTension: 0.1
                     },
                     {

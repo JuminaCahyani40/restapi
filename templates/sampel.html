@@ -8,7 +8,39 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
 <body>
-    <canvas id="lineChart" width="900" height="400"></canvas>
+    <form action="/date", method="post">
+    <input type="date" id="timestep6" name="timestep" value="2021-09-01" min="2021-08-01">
+    <input type="submit" name = "tgl" class="btn btn-primary" value="Lihat Prediksi">
+</form>
+
+<table id="demo">
+    {% for row in csv[15:30] %}
+      <tr>
+      {% for col in row.split(",") %}
+      <td>{{ col }}</td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+</table>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"> Tanggal</th>
+            <th scope="col">Harga Daging Ayam Ras Segar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ df2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ df3 }}</td>
+        </tr>
+    </tbody>
+</table>
+{{ df }}
+    <!-- <canvas id="lineChart" width="900" height="400"></canvas>
     <script>
         var ctx = document.getElementById("lineChart").getContext("2d");
         var lineChart = new Chart(ctx, {
@@ -36,6 +68,6 @@
                 responsive: false
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>
